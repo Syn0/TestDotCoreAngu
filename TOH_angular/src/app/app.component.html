@@ -1,0 +1,17 @@
+<h1>{{title}}</h1>
+<nav>
+    <a class="button" (click)="this.location.back()">←</a>
+
+    <a class="button" routerLink="/dashboard" title="Accueil (Dashboard)">Index</a>
+
+    <a class="button" routerLink="/heroes" title="Liste des héros">Heroes</a>
+</nav>
+
+<router-outlet></router-outlet>
+<div *ngIf="heroService.messages.length">
+
+    <h2>Messages <button class="clear" (click)="heroService.clear()">CLEAR</button></h2>
+    <hr>
+    <div *ngFor='let message of heroService.messages'> {{message}} </div>
+  
+  </div>

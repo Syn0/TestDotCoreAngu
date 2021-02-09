@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+/* Application-wide Styles */
+h1 {
+  color: #369;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 250%;
+}
+h2, h3 {
+  color: #444;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+}
+body {
+  margin: 2em;
+}
+body, input[type="text"], button {
+  color: #333;
+  font-family: Cambria, Georgia, serif;
+}
+/* everywhere else */
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+/* MessagesComponent's private CSS styles */
+h2 {
+  color: red;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+}
+
+button, .button {
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #eee;
+  margin-bottom: 12px;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+  text-decoration: none;
+}
+button:hover, .button:hover {
+  background-color: #cfd8dc;
+}
