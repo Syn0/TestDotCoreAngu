@@ -1,7 +1,8 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      <ion-icon name="logo-angular" style="float:left ;margin-right: 15px;border:1px solid white;background: white; color: black;"></ion-icon>
+      <span style="float:left ;">Test Angular / Ionic UI</span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -13,5 +14,80 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-list>
+   
+
+    <!-- Multi-line sliding item with icon options on both sides -->
+    <ion-item-sliding id="item100">
+      <ion-item>
+        <ion-label>
+          <h2>Slide item</h2>
+          <p>Bougez moi à gauche</p>
+          <p>Ou bien à droite...</p>
+        </ion-label>
+        <ion-note slot="end">
+          10:45 AM
+        </ion-note>
+      </ion-item>
+
+      <ion-item-options side="start">
+        <ion-item-option (click)="presentLoading()">
+          <ion-icon slot="icon-only" name="color-wand-outline" presentLoading></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="presentToastWithOptions('La suppression est facultative')">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      
+    </ion-item-sliding>
+
+  </ion-list>
+  <ion-item-group>
+    <ion-item-divider>
+      <ion-label>Header label - Buttons</ion-label>
+    </ion-item-divider>
+
+      <ion-item href="www.google.fr" size="12">Google</ion-item>
+      <ion-item href="www.firefox.fr" size="12">Firefox</ion-item>
+      <ion-item href="https://ionicframework.com/docs" size="12">Ionic</ion-item>
+  </ion-item-group>
+
+  <!-- Number type input -->
+  <ion-input type="number" value="" placeholder="Enter a number" clearInput></ion-input>
+
+  <!-- Disabled input -->
+  <ion-input value="Disabled" disabled></ion-input>
+
+  <!-- Readonly input -->
+  <ion-input value="Readonly" readonly></ion-input>
+
+  <!-- Inputs with labels -->
+  <ion-item>
+    <ion-label>Default Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Floating Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="fixed">Fixed Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Stacked Label</ion-label>
+    <ion-input></ion-input>
+  </ion-item>
+
+  <!-- Textarea in an item with a floating label -->
+  <ion-item>
+    <ion-label position="floating">Description</ion-label>
+    <ion-textarea autoGrow></ion-textarea>
+  </ion-item>
 </ion-content>
