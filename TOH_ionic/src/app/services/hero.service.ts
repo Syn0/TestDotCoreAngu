@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Hero } from './../models/hero';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient,HttpClientModule , HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class HeroService {
   // FETCH SERVICE EXAMPLE
   /** GET heroes from the server */
   getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(this.heroesUrl)
+    return this.http.get<Hero[]>(this.heroesUrl,)
       .pipe(
         tap(_ => this.log('fetched heroes')),
         catchError(this.handleError<Hero[]>('getHeroes', []))
@@ -36,7 +36,9 @@ export class HeroService {
     this.messages = [];
   }
 
-  private heroesUrl = 'https://localhost:44322/api/heroes';  // URL to web api
+  private heroesUrl = 'https://localhost:5001/api/heroes';  // URL to web api
+  //https://localhost:44322/api/heroes sous VS
+  //https://localhost:5001/api/heroes sous Build prod
   private log(message: string) {
     this.add(`HeroService: ${message}`);
   }

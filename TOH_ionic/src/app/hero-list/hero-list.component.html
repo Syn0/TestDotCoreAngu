@@ -1,0 +1,32 @@
+<ion-list class="hero-selector">
+  <ion-content *ngFor="let hero of heroes" [class.selected]="hero === selectedHero" class="">
+        <!--url="/heroes/{{hero.id}}" (click)="onSelect(hero)"-->
+        <ion-avatar slot="start" style="transform:scale(0.75)" class="ion-align-self-start">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>
+        <ion-label>
+
+          <b class="badge">{{hero.name}}</b>
+          <ion-text color="secondary" style="padding-left: 10px;">id:{{hero.id}} xp:{{hero.xp}}</ion-text>
+          <br>
+          <ion-text color="medium" class="ion-text-wrap ion-text-center">
+            <small>It is a long established fact that a reader will be distracted by the readable content of a page when
+              looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of
+              letters.</small>
+          </ion-text>
+
+        </ion-label>
+        <ion-buttons end>
+          <ion-button>
+            <h1>
+              <ion-icon name="create-outline"></ion-icon>
+            </h1>
+          </ion-button>
+          <ion-button>
+            <h1>
+              <ion-icon name="clipboard-outline" (click)="CopyHero()"></ion-icon>
+            </h1>
+          </ion-button>
+        </ion-buttons>
+  </ion-content>
+</ion-list>

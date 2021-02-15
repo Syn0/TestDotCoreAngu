@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, MenuController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -8,7 +8,9 @@ import { LoadingController, ToastController } from '@ionic/angular';
 })
 export class Tab1Page {
 
-  constructor(public loadingController: LoadingController,public toastController: ToastController) { }
+  NgInit(){
+  }
+  constructor(public loadingController: LoadingController, public toastController: ToastController, private menu: MenuController) { }
 
   async presentLoading() {
     const loading = await this.loadingController.create({
@@ -45,6 +47,21 @@ export class Tab1Page {
       ]
     });
     toast.present();
+  }
+
+
+  openFirst() {
+    this.menu.enable(true, 'first');
+    this.menu.open('first');
+  }
+
+  openEnd() {
+    this.menu.open('end');
+  }
+
+  openCustom() {
+    this.menu.enable(true, 'custom');
+    this.menu.open('custom');
   }
 
 }

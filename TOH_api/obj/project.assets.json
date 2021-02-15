@@ -7623,11 +7623,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Redfield\\Desktop\\TestDotCoreAngu\\TOH\\TOH\\TOH.csproj",
+      "projectUniqueName": "C:\\Users\\Redfield\\Desktop\\TestDotCoreAngu\\TOH_api\\TOH.csproj",
       "projectName": "TOH",
-      "projectPath": "C:\\Users\\Redfield\\Desktop\\TestDotCoreAngu\\TOH\\TOH\\TOH.csproj",
+      "projectPath": "C:\\Users\\Redfield\\Desktop\\TestDotCoreAngu\\TOH_api\\TOH.csproj",
       "packagesPath": "C:\\Users\\Redfield\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Redfield\\Desktop\\TestDotCoreAngu\\TOH\\TOH\\obj\\",
+      "outputPath": "C:\\Users\\Redfield\\Desktop\\TestDotCoreAngu\\TOH_api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
