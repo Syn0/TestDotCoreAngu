@@ -12,7 +12,6 @@
       </ion-toolbar>
     </ion-header>
     <ion-content id="content">
-      <ion-item type="button" routerLink="/tabs/tab1">Test UI</ion-item>
       <ion-item class="">
         <!--url="/heroes/{{hero.id}}" (click)="onSelect(hero)"-->
         <ion-avatar slot="start" style="transform:scale(0.75)">
@@ -22,23 +21,20 @@
     
           <b class="badge">Rémi Legrand</b> 
           <br>
-          <ion-text color="secondary" style="">Guarani atlantique</ion-text>
+          <ion-text color="secondary" >Guarani atlantique</ion-text>
     
         </ion-label>
         <ion-buttons end>
           <ion-button>
-            <ion-icon name="bookmark"></ion-icon>
-          </ion-button>
-          <ion-button>
-            <ion-icon name="clipboard-outline"></ion-icon>
+            <ion-icon name="log-out-outline"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-item>
-      <ion-list>
-        <ion-item button routerLink="/tabs/tab1">Test UI</ion-item>
-        <ion-item button routerLink="/tabs/tab2">Photos</ion-item>
-        <ion-item button routerLink="/tabs/tab3">Hero List</ion-item>
-      </ion-list>
+      <ion-buttons>
+        <ion-button  routerLink="/tabs/tab1">Test UI</ion-button>
+        <ion-button  routerLink="/tabs/tab2">Photos</ion-button>
+        <ion-button  routerLink="/tabs/tab3">Hero List</ion-button>
+      </ion-buttons>
     </ion-content>
   </ion-menu>
 

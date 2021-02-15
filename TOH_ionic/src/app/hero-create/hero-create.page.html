@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <ion-icon name="add-circle-outline" style="float:left;"></ion-icon>&nbsp;Create new hero
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-button (click)="dismiss()" style="margin: 16px;" fill="outline">
+    <ion-icon name="arrow-back-outline"></ion-icon>&nbsp;Cancel
+  </ion-button>
+
+  <ion-item>
+
+    <ion-item-group class="col-xs-12">
+      <ion-item class="col-xs-12" lines="full" style="padding: 0!important;--padding-start:0;">
+        <ion-label position="stacked" color="secondary">Name</ion-label>
+        <ion-input [(ngModel)]="newhero.name" placeholder="Enter a name here." required></ion-input>
+      </ion-item>
+      <ion-item class="col-xs-12" lines="full" style="padding: 0!important;--padding-start:0;">
+        <ion-label position="stacked" color="secondary">Experience</ion-label>
+        <ion-input type="number" required [(ngModel)]="newhero.xp" placeholder="Enter experience amount">
+        </ion-input>
+      </ion-item>
+      <ion-item class="col-xs-12" style="padding: 0!important;--padding-start:0;">
+        <ion-label position="stacked" color="secondary">Description</ion-label>
+        <ion-textarea autoGrow    placeholder="Enter a description here"></ion-textarea>
+      </ion-item>
+      <ion-buttons class="col-xs-12" style="padding: 16px 0!important;--padding-start:0;">
+        <ion-button fill="solid" color="primary" size="large" (click)="create()" slot="end" item-right>
+          <ion-icon name="save-outline"></ion-icon>&nbsp;<span>CREATE</span>
+        </ion-button>
+      </ion-buttons>
+    </ion-item-group>
+  </ion-item>
+
+</ion-content>

@@ -11,51 +11,87 @@
 
 </ion-header>
 
-<ion-content>
+<ion-content id="TabContent">
+
+  <div class="col-md-8 col-xs-12" hidden-md id="HeroDetail" style="float:right;">
+    <ion-header>
+      <h2>
+        <span *ngIf="this.heroService.selectedHero!=null; else NoHeroSelected">Details</span>
+        <ng-template #NoHeroSelected>
+          <div
+            style="text-align: center; padding: 20px; border:1px solid var(--ion-color-warning, #ffc409) !important; color: var(--ion-color-warning, #ffc409) !important;">
+            <ion-icon name="navigate-outline" style="font-size: 2em;"></ion-icon>
+            <h1>
+              Select a hero in list or click on .
+            </h1>
+          </div>
+
+        </ng-template>
+      </h2>
+    </ion-header>
+    <ion-item *ngIf="this.heroService.selectedHero!=null">
+
+      <ion-item-group class="col-xs-12">
+        <ion-item style="font-style: italic;color:medium;">
+          <ion-icon name="star" style="font-size: small;padding-right: 16px;"></ion-icon>
+          <ion-text color="medium" style="padding-top: 3px;">
+            Selected hero : {{this.heroService.selectedHero.id}}
+          </ion-text>
+        </ion-item>
+        <ion-item class="col-md-6 col-xs-6" lines="full" style="padding: 0!important;--padding-start:0;">
+          <ion-label position="stacked" color="secondary">Name</ion-label>
+          <ion-input  required [(ngModel)]="heroService.selectedHero.name" placeholder="Enter a name here."></ion-input>
+        </ion-item>
+        <ion-item class="col-md-6 col-xs-6" lines="full" style="padding: 0!important;--padding-start:0;">
+          <ion-label position="stacked" color="secondary">Experience</ion-label>
+          <ion-input required type="number" [(ngModel)]="heroService.selectedHero.xp" placeholder="Enter experience amount">
+          </ion-input>
+        </ion-item>
+        <ion-item class="col-md-12 col-xs-12" style="padding: 0!important;--padding-start:0;">
+          <ion-label position="stacked" color="secondary">Description</ion-label>
+          <ion-textarea autoGrow
+            value="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.">
+          </ion-textarea>
+        </ion-item>
+        <ion-buttons class="col-xs-12" style="padding: 16px 0!important;--padding-start:0;">
+          <ion-button  fill="solid" color="warning" size="large" (click)="save(this.heroService.selectedHero)">
+            <ion-icon name="save-outline"></ion-icon>&nbsp;<span style="font-size: 120%;">SAVE</span>
+          </ion-button>
+          <ion-button fill="solid" color="danger" size="large" (click)="delete(this.heroService.selectedHero)">
+            <ion-icon name="trash-outline"></ion-icon>&nbsp;<span style="font-size: 120%;">DELETE</span>
+          </ion-button>
+        </ion-buttons>
+      </ion-item-group>
+    </ion-item>
+  </div>
   <div class="col-md-4">
     <ion-list-header class="ion-no-padding">
       <ion-searchbar #searchBox id="search-box" (input)="search(searchBox.value)">
 
       </ion-searchbar>
       <ion-buttons end id="search-bar-buttons">
-        <ion-button>
+        <ion-button color="primary" (click)="presentCreateModal()">
+          CREATE&nbsp;
           <ion-icon name="add-circle-outline" style="font-size:2em;"></ion-icon>
         </ion-button>
         <ion-button>
+          OPTIONS&nbsp;
           <ion-icon name="ellipsis-vertical-outline" style="font-size:2em;"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-list-header>
 
-    <ion-header collapse="condense">
-      <ion-toolbar>
-        <ion-menu-button slot="start"></ion-menu-button>
-        <ion-title size="large">Heroes list</ion-title>
-      </ion-toolbar>
-    </ion-header>
+    <ion-progress-bar type="indeterminate" id="RequestingHeroesLoadingBar"></ion-progress-bar>
 
-    <ion-item class="search-result" *ngFor="let hero of heroes$ | async">
-      {{hero.name}}
-    </ion-item>
-
+    <ion-list-header *ngIf="(lastTerm!='')">
+      <ion-header>
+        Search result ({{lastTerm}})
+      </ion-header>
+    </ion-list-header>
     <!--  
       <app-explore-container name="Tab 3 page"></app-explore-container>
     -->
-    <app-hero-list></app-hero-list>
+      <app-hero-list></app-hero-list>
   </div>
-  <div class="col-md-8" hidden-md>
-
-    <ion-item>
-      <ion-header>
-        <h1>
-          Details
-        </h1>
-      </ion-header>
-    </ion-item>
-    <ion-item>
-
-    </ion-item>
-  </div>
-
 
 </ion-content>
