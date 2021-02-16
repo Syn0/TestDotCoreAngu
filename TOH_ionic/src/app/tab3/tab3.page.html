@@ -40,21 +40,21 @@
         </ion-item>
         <ion-item class="col-md-6 col-xs-6" lines="full" style="padding: 0!important;--padding-start:0;">
           <ion-label position="stacked" color="secondary">Name</ion-label>
-          <ion-input  required [(ngModel)]="heroService.selectedHero.name" placeholder="Enter a name here."></ion-input>
+          <ion-input required [(ngModel)]="heroService.selectedHero.name" placeholder="Enter a name here."></ion-input>
         </ion-item>
         <ion-item class="col-md-6 col-xs-6" lines="full" style="padding: 0!important;--padding-start:0;">
           <ion-label position="stacked" color="secondary">Experience</ion-label>
-          <ion-input required type="number" [(ngModel)]="heroService.selectedHero.xp" placeholder="Enter experience amount">
+          <ion-input required type="number" [(ngModel)]="heroService.selectedHero.xp"
+            placeholder="Enter experience amount">
           </ion-input>
         </ion-item>
         <ion-item class="col-md-12 col-xs-12" style="padding: 0!important;--padding-start:0;">
           <ion-label position="stacked" color="secondary">Description</ion-label>
-          <ion-textarea autoGrow
-            value="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.">
+          <ion-textarea autoGrow [(ngModel)]="heroService.selectedHero.description">
           </ion-textarea>
         </ion-item>
         <ion-buttons class="col-xs-12" style="padding: 16px 0!important;--padding-start:0;">
-          <ion-button  fill="solid" color="warning" size="large" (click)="save(this.heroService.selectedHero)">
+          <ion-button fill="solid" color="warning" size="large" (click)="save(this.heroService.selectedHero)">
             <ion-icon name="save-outline"></ion-icon>&nbsp;<span style="font-size: 120%;">SAVE</span>
           </ion-button>
           <ion-button fill="solid" color="danger" size="large" (click)="delete(this.heroService.selectedHero)">
@@ -66,7 +66,7 @@
   </div>
   <div class="col-md-4">
     <ion-list-header class="ion-no-padding">
-      <ion-searchbar #searchBox id="search-box" (input)="search(searchBox.value)">
+      <ion-searchbar #searchBox id="search-box" (input)="search(searchBox.value)" (value)="this.lastTerm">
 
       </ion-searchbar>
       <ion-buttons end id="search-bar-buttons">
@@ -91,7 +91,42 @@
     <!--  
       <app-explore-container name="Tab 3 page"></app-explore-container>
     -->
-      <app-hero-list></app-hero-list>
+    <ion-list class="hero-selector">
+
+      <ion-item *ngFor="let hero of (heroService.hs)"
+        [class.selected]="hero === this.heroService.selectedHero" class="" lines="full">
+        <!--url="/heroes/{{hero.id}}" (click)="onSelect(hero)"-->
+        <ion-avatar slot="start" style="transform:scale(0.75)" class="ion-align-self-start">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>
+        <ion-label>
+
+          <b class="badge">{{hero.name}}</b>
+          <ion-text color="secondary" style="padding-left: 10px;">id:{{hero.id}} xp:{{hero.xp}}</ion-text>
+          <br>
+          <ion-text color="medium" class="ion-text-wrap ion-text-center">
+            <small>{{hero.description}}</small>
+          </ion-text>
+
+        </ion-label>
+        <ion-buttons end>
+          <ion-button (click)="this.heroService.onSelect(hero)">
+            <h1>
+              <ion-icon name="create-outline"></ion-icon>
+            </h1>
+          </ion-button>
+          <ion-button (click)="this.heroService.onCopy(hero)">
+            <h1>
+              <ion-icon name="clipboard-outline"></ion-icon>
+            </h1>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+      <ion-item *ngIf="(heroService.hs.length == 0)">
+        <h1>No heroes available...</h1>
+      </ion-item>
+    </ion-list>
+    <app-hero-list></app-hero-list>
   </div>
 
 </ion-content>

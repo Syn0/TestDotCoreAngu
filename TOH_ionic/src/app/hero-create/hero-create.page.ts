@@ -10,14 +10,26 @@ import { Hero } from '../models/hero';
 })
 export class HeroCreatePage implements OnInit {
 
-  newhero: Hero = {
-    id: -1,
+  public newhero = {
     name: '',
     xp: 0,
+    xP2: 0,
+    description: ''
   };
-  constructor(public modalController: ModalController, public heroService: HeroService) { }
+  constructor(public modalController: ModalController, public heroService: HeroService) { 
+ 
+
+  }
 
   ngOnInit() {
+    if(this.heroService.copiedhero != null) {
+      console.log("APPLY PASTE");
+      console.log(this.heroService.copiedhero);
+      this.newhero.name = this.heroService.copiedhero.name;
+      this.newhero.xp = this.heroService.copiedhero.xp;
+      this.newhero.xP2 = this.heroService.copiedhero.xP2;
+      this.newhero.description = this.heroService.copiedhero.description;
+    }
   }
 
   dismiss() {
@@ -30,9 +42,15 @@ export class HeroCreatePage implements OnInit {
 
   create() {
     if (this.newhero.name != "")
-      this.heroService.addHero({ name: this.newhero.name, xp: this.newhero.xp}).subscribe(x => {
-        this.dismiss();
-      });
+      this.heroService.addHero(this.newhero as Hero)
+      .subscribe(
+        (data) => {
+          this.heroService.hs.push(data);
+          this.heroService.Toast_Created(data);
+          this.dismiss();
+        },
+        (error) => error
+      );
   }
 
 }

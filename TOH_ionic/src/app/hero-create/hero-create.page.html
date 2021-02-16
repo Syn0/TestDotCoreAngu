@@ -16,7 +16,7 @@
     <ion-item-group class="col-xs-12">
       <ion-item class="col-xs-12" lines="full" style="padding: 0!important;--padding-start:0;">
         <ion-label position="stacked" color="secondary">Name</ion-label>
-        <ion-input [(ngModel)]="newhero.name" placeholder="Enter a name here." required></ion-input>
+        <ion-input [(ngModel)]="this.newhero.name" placeholder="Enter a name here." required></ion-input>
       </ion-item>
       <ion-item class="col-xs-12" lines="full" style="padding: 0!important;--padding-start:0;">
         <ion-label position="stacked" color="secondary">Experience</ion-label>
@@ -25,7 +25,7 @@
       </ion-item>
       <ion-item class="col-xs-12" style="padding: 0!important;--padding-start:0;">
         <ion-label position="stacked" color="secondary">Description</ion-label>
-        <ion-textarea autoGrow    placeholder="Enter a description here"></ion-textarea>
+        <ion-textarea autoGrow  [(ngModel)]="newhero.description"  placeholder="Enter a description here"></ion-textarea>
       </ion-item>
       <ion-buttons class="col-xs-12" style="padding: 16px 0!important;--padding-start:0;">
         <ion-button fill="solid" color="primary" size="large" (click)="create()" slot="end" item-right>

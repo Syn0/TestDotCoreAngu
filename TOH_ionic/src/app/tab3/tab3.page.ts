@@ -19,36 +19,7 @@ export class Tab3Page {
   SetLoadingBarActive(value: boolean) { this.RequestingHeroesLoadingBar.style.display = value ? '' : 'none'; }
 
   constructor(public heroService: HeroService, public modalController: ModalController) {
-    this.heroService.herolist = this.searchTerms.pipe(
 
-      debounceTime(50),
-      distinctUntilChanged(),
-      // wait 300ms after each keystroke before considering the term
-      /*
-      // ignore new term if same as previous term
-      filter(searchTerm => searchTerm.length > 2),
-      */
-
-      tap(x => {
-        this.SetLoadingBarActive(true);
-      }),
-
-      // switch to new search observable each time the term changes
-      switchMap((term: string) => this.heroService.searchHeroes(term)),
-      tap(x => {
-        var newDraw = !(this.lastTerm == "");
-        this.SetLoadingBarActive(false);
-      }),
-
-    );
-
-    this.heroService.herolist.subscribe((x) => {
-
-      //console.log('term=' + this.lastTerm);
-      console.log(x)
-      this.SetLoadingBarActive(false);
-
-    });
   }
 
   // Push a search term into the observable stream.
@@ -71,6 +42,7 @@ export class Tab3Page {
   select(hero: Hero) {
     this.heroService.onSelect(hero);
   }
+  
   async presentCreateModal() {
     const modal = await this.modalController.create({
       component: HeroCreatePage,
@@ -82,7 +54,39 @@ export class Tab3Page {
   ngOnInit(): void {
     this.RequestingHeroesLoadingBar = document.getElementById("RequestingHeroesLoadingBar");
 
-    this.SetLoadingBarActive(false);
+    this.heroService.herolist = this.searchTerms
+      .pipe(
+
+        debounceTime(50),
+        distinctUntilChanged(),
+        // wait 300ms after each keystroke before considering the term
+        // ignore new term if same as previous term
+        //filter(searchTerm => searchTerm.length > 2),
+
+        tap(x => {
+          this.SetLoadingBarActive(true);
+        }),
+
+        // switch to new search observable each time the term changes
+        switchMap((term: string) => {
+          if (term) return this.heroService.searchHeroes(term);
+          else return this.heroService.getHeroes();
+        }),
+        tap(x => {
+          this.SetLoadingBarActive(false);
+        }),
+
+      );
+
+    this.heroService.herolist.subscribe((x) => {
+
+      console.log('term=' + this.lastTerm);
+      console.log(x);
+      this.heroService.hs = x;
+      //this.SetLoadingBarActive(false);
+    });
+    this.searchTerms.next(this.lastTerm = '');
+
   }
 
 
