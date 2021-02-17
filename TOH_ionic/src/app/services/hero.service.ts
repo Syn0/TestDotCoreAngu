@@ -13,12 +13,13 @@ import { Utils } from '../app.component';
 export class HeroService {
 
   public herolist: Observable<Hero[]> | undefined;
-  public hs : Hero[] = [];
-  public copiedhero : Hero | undefined;
+  public hs: Hero[] = [];
+  public copiedhero: Hero | undefined;
+  
   // FETCH SERVICE EXAMPLE
   /** GET heroes from the server */
   getHeroes(): Observable<Hero[]> {
-    return this.http.get<Hero[]>(environment.heroesUrl,)
+    return this.http.get<Hero[]>(environment.heroesUrl)
       .pipe(
         tap(_ => this.log('Fetched heroes')),
         catchError(this.handleError<Hero[]>('getHeroes', []))
@@ -32,7 +33,7 @@ export class HeroService {
       catchError(this.handleError<Hero>(`getHero id=${id}`))
     );
   }
-  
+
   /* GET heroes whose name contains search term */
   searchHeroes(term: string): Observable<Hero[]> {
     if (!term.trim()) {
@@ -40,7 +41,7 @@ export class HeroService {
       return of([]);
     }
     return this.http.get<Hero[]>(`${environment.heroesUrl}/?name=${term}`).pipe(
-      tap(x => x.length>0 ?
+      tap(x => x.length > 0 ?
         console.log(`Found ` + x.length + ` heroes matching "${term}"`) :
         console.log(`No heroes matching "${term}"`)),
       catchError(this.handleError<Hero[]>('searchHeroes', [])),
@@ -56,14 +57,14 @@ export class HeroService {
     this.messages = [];
   }
 
-    // URL to web api
+  // URL to web api
   //https://localhost:44322/api/heroes sous VS
   //https://localhost:5001/api/heroes sous Build prod
   private log(message: string) {
     console.log("[LOG] " + message);
     this.add(`HeroService: ${message}`);
   }
-  
+
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -116,7 +117,7 @@ export class HeroService {
     //document.getElementById("TabContent").scrollToTop();
     //this.ScrollToElementID("TabContent","HeroDetail", 1000);
   }
-  onCopy(hero: Hero){
+  onCopy(hero: Hero) {
     this.copiedhero = (hero);
     this.Toast_CopyHero();
   }
@@ -156,7 +157,7 @@ export class HeroService {
     toast.present();
   }
 
-  public async Toast_Error(text:string) {
+  public async Toast_Error(text: string) {
     const toast = await this.toastController.create({
       message: text,
       position: 'bottom',
@@ -166,7 +167,7 @@ export class HeroService {
     });
     toast.present();
   }
-  public async Toast_Created(hero:Hero) {
+  public async Toast_Created(hero: Hero) {
     const toast = await this.toastController.create({
       message: `Hero created under id:${hero.id} and name: ${hero.name}`,
       position: 'bottom',

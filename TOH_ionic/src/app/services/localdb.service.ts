@@ -1,19 +1,14 @@
-import { HeroService } from './hero.service';
-import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
-import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Observable } from 'rxjs';
-import { Hero } from '../models/hero';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
 import { ToastController } from '@ionic/angular';
-
+import { Hero } from '../models/hero';
+import { HeroService } from './hero.service';
 import { Storage } from '@ionic/storage';
+
 @Injectable({
   providedIn: 'root'
 })
-export class InMemHeroService implements InMemoryDbService {
-  
+export class LocaldbService {
+
   constructor(
     private heroService: HeroService,
     public toastController: ToastController,
@@ -24,23 +19,6 @@ export class InMemHeroService implements InMemoryDbService {
     //db2.set('argent','++');
     this.InitializeDb();
   }
-
-  createDb() {
-    --/* Load data from indexed/local db and insert to return statement ! */
-
-    return { heroes: this.init_heroes };
-  }
-
-
-  // Overrides the genId method to ensure that a hero always has an id.
-  // If the heroes array is empty,
-  // the method below returns the initial number (11).
-  // if the heroes array is not empty, the method below returns the highest
-  // hero id + 1.
-  genId(heroes: Hero[]): number {
-    return heroes.length > 0 ? Math.max(...heroes.map(hero => hero.id)) + 1 : 11;
-  }
-
 
   init_heroes : Hero[] | undefined = [
     { id: 1, name: 'Windstorm', xp: 2, description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.' },
@@ -53,8 +31,8 @@ export class InMemHeroService implements InMemoryDbService {
   ];
 
   async InitializeDb(force: boolean = false) {
-    await (this.Heroes());
-    if (force || !this._heroes) {
+    var hs = await (this.Heroes());
+    if (force || !hs) {
       this._heroes = this.init_heroes;
       this.UpdateDb();
       console.log('[LOG.DB] Database initialized with new Heroes list.');
@@ -68,7 +46,7 @@ export class InMemHeroService implements InMemoryDbService {
 
   private _heroes: Hero[] | undefined;
   async Heroes(): Promise<Hero[] | undefined> {
-    return (this._heroes ? this._heroes : await this.storage.get('heroes'));
+    return (this._heroes ? this._heroes : this.storage.get('heroes'));
   }
 
 }
