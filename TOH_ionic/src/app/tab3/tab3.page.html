@@ -7,13 +7,19 @@
     <ion-title>
       Heroes list
     </ion-title>
+    <ion-note slot="end">
+      <ion-text *ngIf="heroService.online else txt_offline" color="success"> Online &nbsp;&nbsp;</ion-text>
+      <ng-template #txt_offline>
+        <ion-text color="danger">Offline &nbsp;&nbsp;</ion-text>
+      </ng-template>
+    </ion-note>
   </ion-toolbar>
 
 </ion-header>
 
 <ion-content id="TabContent">
 
-  <div class="col-md-8 col-xs-12" hidden-md id="HeroDetail" style="float:right;">
+  <div class="col-md-8 col-xs-12 float-right" hidden-md id="HeroDetail" style="float:right;">
     <ion-header>
       <h2>
         <span *ngIf="this.heroService.selectedHero!=null; else NoHeroSelected">Details</span>
@@ -93,8 +99,8 @@
     -->
     <ion-list class="hero-selector">
 
-      <ion-item *ngFor="let hero of (heroService.hs)"
-        [class.selected]="hero === this.heroService.selectedHero" class="" lines="full">
+      <ion-item *ngFor="let hero of (heroService.heroesDisplayList)" [class.selected]="hero === this.heroService.selectedHero" class=""
+        lines="full">
         <!--url="/heroes/{{hero.id}}" (click)="onSelect(hero)"-->
         <ion-avatar slot="start" style="transform:scale(0.75)" class="ion-align-self-start">
           <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
@@ -122,8 +128,8 @@
           </ion-button>
         </ion-buttons>
       </ion-item>
-      <ion-item *ngIf="(heroService.hs.length == 0)">
-        <h1>No heroes available...</h1>
+      <ion-item *ngIf="(heroService.heroesDisplayList.length == 0)">
+        <h1>No heroes...</h1>
       </ion-item>
     </ion-list>
     <app-hero-list></app-hero-list>

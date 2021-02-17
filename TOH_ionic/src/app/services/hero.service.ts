@@ -1,3 +1,4 @@
+import { InMemHeroService } from './in-mem-hero.service';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { Hero } from './../models/hero';
@@ -5,23 +6,36 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { ToastController } from '@ionic/angular';
-import { Utils } from '../app.component';
+import { AppComponent, Utils } from '../app.component';
+import { AppModule } from '../app.module';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class HeroService {
 
-  public herolist: Observable<Hero[]> | undefined;
-  public hs: Hero[] = [];
+  // Indicateur de statut de connexion à l'API
+  public online: boolean = false;
+
+  //public herolist: Observable<Hero[]> | undefined;
+  public heroesDisplayList: Hero[] = [];
   public copiedhero: Hero | undefined;
-  
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+
+  UpdateHeroesDatabase() {
+    this.getHeroes().subscribe((x: Hero[]) => {
+      this.appli.singletonIMS.localdb.heroes = x;
+      this.appli.singletonIMS.PushDatabase();
+
+    });
+  }
+
   // FETCH SERVICE EXAMPLE
   /** GET heroes from the server */
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(environment.heroesUrl)
       .pipe(
-        tap(_ => this.log('Fetched heroes')),
         catchError(this.handleError<Hero[]>('getHeroes', []))
       );
   }
@@ -29,7 +43,6 @@ export class HeroService {
   getHero(id: number): Observable<Hero> {
     const url = `${environment.heroesUrl}/${id}`;
     return this.http.get<Hero>(url).pipe(
-      tap(_ => this.log(`Fetched hero id=${id}`)),
       catchError(this.handleError<Hero>(`getHero id=${id}`))
     );
   }
@@ -48,35 +61,17 @@ export class HeroService {
     );
   }
 
-  // MESSAGE SERVICE EXAMPLE
-  messages: string[] = [];
-  add(message: string) {
-    this.messages.push(message);
-  }
-  clear() {
-    this.messages = [];
-  }
-
-  // URL to web api
-  //https://localhost:44322/api/heroes sous VS
-  //https://localhost:5001/api/heroes sous Build prod
-  private log(message: string) {
-    console.log("[LOG] " + message);
-    this.add(`HeroService: ${message}`);
-  }
-
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
   /** PUT: update the hero on the server */
   updateHero(hero: Hero): Observable<any> {
     const id = typeof hero === 'number' ? hero : hero.id;
     const url = `${environment.heroesUrl}/${id}`;
 
+    console.log(`[LOG.API.TRY.${this.online ? 'ONLINE' : 'OFFLINE'}] <Hero>('put')`);
     return this.http.put(url, hero, this.httpOptions).pipe(
       tap(_ => {
-        this.log(`updated hero id=${id}`);
         this.Toast_SavedHero();
+        this.UpdateHeroesDatabase();
+        console.log(`[LOG.API.${this.online ? 'ONLINE' : 'OFFLINE'}.COMPLETE] <Hero>('put')`);
       }),
       catchError(this.handleError<any>('updateHero'))
     );
@@ -84,9 +79,14 @@ export class HeroService {
 
   /** POST: add a new hero to the server */
   addHero(hero): Observable<Hero> {
+    console.log(`[LOG.API.TRY.${this.online ? 'ONLINE' : 'OFFLINE'}] <Hero>('post')`);
     return this.http.post<Hero>(environment.heroesUrl, hero, this.httpOptions).pipe(
-      tap((newHero: Hero) => this.log(`added hero w/ id=${newHero.id}`)),
-      catchError(this.handleError<Hero>('addHero'))
+      tap((n: Hero) => {
+        this.Toast_Created(n);
+        this.UpdateHeroesDatabase();
+        console.log(`[LOG.API.${this.online ? 'ONLINE' : 'OFFLINE'}.COMPLETE] <Hero>('post')`);
+      }),
+      catchError(this.handleError<Hero>('addHero')),
     );;
   }
 
@@ -95,14 +95,16 @@ export class HeroService {
     const id = typeof hero === 'number' ? hero : hero.id;
     const url = `${environment.heroesUrl}/${id}`;
 
-    return this.http.delete<Hero>(url, this.httpOptions).pipe(
-      tap(_ => {
-        this.log(`deleted hero id=${id}`);
-        this.Toast_DeletedHero();
-        this.getHeroes().subscribe();
-      }),
-      catchError(this.handleError<Hero>('deleteHero'))
-    );
+    console.log(`[LOG.API.TRY.${this.online ? 'ONLINE' : 'OFFLINE'}] <Hero>('delete')`);
+    return this.http.delete<Hero>(url, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<Hero>('deleteHero')),
+        tap((value: Hero) => {
+          console.log(`[LOG.API.${this.online ? 'ONLINE' : 'OFFLINE'}.COMPLETE] <Hero>('delete')`);
+          this.Toast_DeletedHero();
+          this.UpdateHeroesDatabase();
+        })
+      );
   }
 
 
@@ -112,23 +114,27 @@ export class HeroService {
   */
   selectedHero!: Hero;
   onSelect(hero: Hero): void {
-    this.add(`HeroService: Selected hero id=${hero.id}`);
     this.selectedHero = hero;
     //document.getElementById("TabContent").scrollToTop();
     //this.ScrollToElementID("TabContent","HeroDetail", 1000);
   }
-  onCopy(hero: Hero) {
-    this.copiedhero = (hero);
-    this.Toast_CopyHero();
-  }
-  ScrollToElementID(containerid: string, targetid: string, speed: number | undefined) {
+  /*ScrollToElementID(containerid: string, targetid: string, speed: number | undefined) {
     if (speed == null) speed = 1000;
     var offsettop = document.getElementById(targetid).offsetTop;
     console.log(offsettop);
     //document.getElementById(containerid).scrollTo({ top: offsettop, behavior: 'smooth'});
     //document.body.animate({ scrollTop: offsettop }, speed);
     //document.getElementById(containerid).animate({ scrollTop: offsettop }, speed);
+  }*/
+
+  /*
+    Met en tampon ce hero (comme un presse-papier)
+  */
+  onCopy(hero: Hero) {
+    this.copiedhero = (hero);
+    this.Toast_CopyHero();
   }
+
   public async Toast_CopyHero() {
     const toast = await this.toastController.create({
       message: "Hero copied",
@@ -156,7 +162,6 @@ export class HeroService {
     });
     toast.present();
   }
-
   public async Toast_Error(text: string) {
     const toast = await this.toastController.create({
       message: text,
@@ -188,18 +193,19 @@ export class HeroService {
     return (err: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
+      console.error(`${operation} failed: ${err.message}`); // log to console instead
       console.error(err); // log to console instead
       this.Toast_Error(err.error.errors[Object.getOwnPropertyNames(err.error.errors)[0]][0])
-      // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${err.message}`);
 
+      // TODO: better job of transforming error for user consumption
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
 
   constructor(
-    public http: HttpClient,
-    public toastController: ToastController
+    private http: HttpClient,
+    public toastController: ToastController,
+    public appli: AppModule,
   ) { }
 }

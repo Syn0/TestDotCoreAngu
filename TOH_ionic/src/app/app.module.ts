@@ -22,11 +22,14 @@ import { IonicStorageModule } from '@ionic/storage';
     AppRoutingModule,
     HttpClientModule,
     HeroCreatePageModule,
-    environment.production ? [] : HttpClientInMemoryWebApiModule.forRoot(InMemHeroService, { delay: 500 }),
-    IonicStorageModule.forRoot({storeName: 'Guatemala'}),
+    HttpClientInMemoryWebApiModule.forRoot(InMemHeroService, { delay: 500 }),
+    IonicStorageModule.forRoot({storeName: 'IonicOfflineDB'}),
 
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },InMemHeroService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  singletonIMS = null;
+
+}

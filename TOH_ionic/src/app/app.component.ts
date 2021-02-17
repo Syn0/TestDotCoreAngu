@@ -1,5 +1,8 @@
+import { environment } from './../environments/environment';
 import { Component } from '@angular/core';
 import { Plugins } from '@capacitor/core';
+import { InMemHeroService } from './services/in-mem-hero.service';
+import { HeroService } from './services/hero.service';
 const { SplashScreen } = Plugins;
 
 @Component({
@@ -8,7 +11,10 @@ const { SplashScreen } = Plugins;
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  constructor() {
+
+
+  constructor(
+  ) {
     this.initializeApp();
   }
 
@@ -19,7 +25,8 @@ export class AppComponent {
         
         https://capacitor.ionicframework.com/docs/apis/splash-screen#hiding-the-splash-screen
     */
-    SplashScreen.hide();
+    if (!environment.production) SplashScreen.hide();
+    
   }
 }
 
