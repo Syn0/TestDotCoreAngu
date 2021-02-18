@@ -1,15 +1,21 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
-  { path: '', loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule) },
   {
-    path: 'hero-create',
-    loadChildren: () => import('./hero-create/hero-create.module').then( m => m.HeroCreatePageModule)
+    path: '',
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: 'ROLE_USER',
+      redirect : '/login'
+    }
   },
+  
   {
-    path: 'hero-create',
-    loadChildren: () => import('./hero-create/hero-create.module').then( m => m.HeroCreatePageModule)
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
   }
 ];
 @NgModule({
@@ -18,4 +24,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

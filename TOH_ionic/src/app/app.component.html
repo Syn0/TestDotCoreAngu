@@ -28,33 +28,31 @@
           </ion-button>
         </ion-buttons>
       </ion-item>
-      <ion-item color="medium">
-        <ion-label>
-          Navigation
-        </ion-label>
-      </ion-item>
+      <ion-item-divider color="medium" style="--padding:0;">
+          ▼ Navigation
+      </ion-item-divider>
       <ion-item button type="button" detail auto-hide routerLink="/tabs/tab1">
         <ion-icon name="triangle" slot="start"></ion-icon>
         <ion-label> Test UI </ion-label>
-        <ion-note slot="end" color="danger" >99</ion-note>
+        <ion-note slot="end" color="danger" >tab1</ion-note>
       </ion-item>
       <ion-item button type="button" detail auto-hide routerLink="/tabs/tab2">
         <ion-icon name="images" slot="start"></ion-icon>
         <ion-label> Photos </ion-label>
-        <ion-note slot="end" color="danger" >99</ion-note>
+        <ion-note slot="end" color="danger" >tab2</ion-note>
       </ion-item>
       <ion-item button type="button" detail auto-hide routerLink="/tabs/tab3">
         <ion-icon name="square" slot="start"></ion-icon>
         <ion-label> Hero List </ion-label>
-        <ion-note slot="end" color="danger" >99</ion-note>
+        <ion-note slot="end" color="danger" >tab3</ion-note>
       </ion-item>
     </ion-header>
 
-    <ion-content id="content">
+    <ion-content >
       
     </ion-content>
   </ion-menu>
 
 
-  <ion-router-outlet></ion-router-outlet>
+  <ion-router-outlet id="content"></ion-router-outlet>
 </ion-app>

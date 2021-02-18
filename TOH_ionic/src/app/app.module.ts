@@ -22,6 +22,8 @@ import { IonicStorageModule } from '@ionic/storage';
     AppRoutingModule,
     HttpClientModule,
     HeroCreatePageModule,
+
+    //MODULES INMEMORY + LOCALSTORAGE
     HttpClientInMemoryWebApiModule.forRoot(InMemHeroService, { delay: 500 }),
     IonicStorageModule.forRoot({storeName: 'IonicOfflineDB'}),
 

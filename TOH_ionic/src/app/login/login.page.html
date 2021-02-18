@@ -1,0 +1,38 @@
+<div
+  style="height: 100vh;display: flex;flex-direction: column;justify-content: center;align-items: center;background: var(--ion-color-primary-tint,#4c8dff)!important;">
+  <div style="width:80%;max-width: 400px;" class="ion-justify-content-center">
+
+    
+    <ion-label class=" text-center w-100 display-block">
+      <ion-icon name="logo-angular" style="font-size: 40px;"></ion-icon>
+    </ion-label>
+    <ion-label class="ion-padding-bottom text-center w-100 display-block">
+      <h1>
+        IONIC APP
+      </h1>
+    </ion-label>
+
+    <ion-card>
+      <ion-item>
+        <ion-label color="primary" position="floating">Email</ion-label>
+        <ion-input type="email" [(ngModel)]="this.login.email"></ion-input>
+      </ion-item>
+    </ion-card>
+    <ion-card>
+      <ion-item>
+        <ion-label color="primary" position="floating">Password</ion-label>
+        <ion-input #password type="password" [(ngModel)]="this.login.password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon #icon name="eye-off-outline" slot="start"></ion-icon>
+        <ion-label for="checkbox">show password</ion-label>
+        <ion-checkbox id="checkbox"  (click)="showPassword(password,icon)"></ion-checkbox>
+      </ion-item>
+    </ion-card>
+
+    <div style="padding:8px;">
+
+      <ion-button size="large" type="submit" expand="block" (click)="logme()">Login</ion-button>
+    </div>
+  </div>
+</div>

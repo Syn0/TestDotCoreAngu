@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../services/auth.guard';
 
 import { TabsPage } from './tabs.page';
 
@@ -13,8 +14,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+            loadChildren: () => import('../tab1/tab1.module').then(m => m.Tab1PageModule)
           }
         ]
       },
@@ -23,8 +23,11 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+            loadChildren: () => import('../tab2/tab2.module').then(m => m.Tab2PageModule),
+            canActivate: [AuthGuard],
+            data: {
+              role: 'ROLE_USER'
+            }
           }
         ]
       },
@@ -32,6 +35,10 @@ const routes: Routes = [
         path: 'tab3',
         children: [
           { path: '', loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule) },
+          {
+            path: 'hero-create',
+            loadChildren: () => import('../hero-create/hero-create.module').then(m => m.HeroCreatePageModule)
+          }
           /*          
           { path: 'dashboard', component: DashboardComponent },
           { path: 'heroes/:id', component: HeroDetailComponent },

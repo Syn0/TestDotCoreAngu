@@ -80,17 +80,17 @@ export class InMemHeroService implements InMemoryDbService {
 
 
   private init_heroes: Hero[] = [
-    { id: 1, name: 'Windstorm', xp: 2, description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.' },
-    { id: 2, name: 'Bombasto', xp: 644, description: 'Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.' },
-    { id: 3, name: 'Magneta', xp: 1, description: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.' },
-    { id: 4, name: 'Tornado', xp: 536, description: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.' },
-    { id: 5, name: 'Stroumpf', xp: 536, description: 'Incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem.' },
-    { id: 6, name: 'Ironman', xp: 21, description: 'Ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate.' },
-    { id: 7, name: 'TorteliniBoy', xp: 123, description: 'Velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.' }
+    { id: 1, name: 'Windstorm',   xp: 2,    description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium , totam rem aperiam.' },
+    { id: 2, name: 'Bombasto',    xp: 644,  description: 'Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.' },
+    { id: 3, name: 'Magneta',     xp: 1,    description: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, qui ratione voluptatem.' },
+    { id: 4, name: 'Tornado',     xp: 536,  description: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia.' },
+    { id: 5, name: 'Stroumpf',    xp: 536,  description: 'Incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum.' },
+    { id: 6, name: 'Ironman',     xp: 21,   description: 'Ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure.' },
+    { id: 7, name: 'TorteliniBoy',xp: 123,  description: 'Velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.' }
   ];
   private init_monsters: Monster[] = [
-    { id: 1, name: 'Goblin', xp: 2, description: 'Dolorem unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.' },
-    { id: 2, name: 'Stormtrooper', xp: 123, description: 'Inventore esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.' }
+    { id: 1, name: 'Goblin',      xp: 2,    description: 'Dolorem unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.' },
+    { id: 2, name: 'Stormtrooper',xp: 123,  description: 'Inventore esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.' }
   ];
 
   async PushDatabase(): Promise<boolean> {
